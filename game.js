@@ -1,7 +1,3 @@
-// receive a string from player
-// string must === "rock", "paper", or "scissors"
-
-
 // assign random number (1 - 3) to "rock" "paper" "scissors"
 function getComputerChoice(max=3) { 
     const randInt = Math.floor(Math.random() * max + 1);
@@ -61,7 +57,7 @@ function playRound(playerSelection, computerSelection) { // manually insert play
             }
             break;
     }
-    console.log(result);
+
     return result;
 }
 
@@ -78,20 +74,28 @@ function game() {
 
     let playerTally = 0;
     let computerTally = 0;
-    let roundScore; //string
+    let drawCounter = 0;
 
     // one instance of rock paper scissors
     // run game 5 times while keeping score
     for (let i = 0; i < 5; i++) {
-        // get input
+        // get input and computer's choice
         let playerSelection = prompt("Enter rock, paper, or scissors", "")
-        // get computerChoice
         let roundChoice = getComputerChoice()
-        // run game
+        // run game and print result
         let roundResult = playRound(playerSelection, roundChoice)
-
-        // trying to create a score counter. detect "win" or "lose" from string given by playRound()?        
+        console.log(roundResult);
+        
+        // check result to update score counter
+        if (roundResult.includes("You win")) {
+            playerTally++;
+        } else if (roundResult.includes("You lose")) {
+            computerTally++;
+        } else {
+            drawCounter++;
+        }
+        console.log(`The score is ${playerTally} - ${computerTally} - ${drawCounter}`)
+        
+        console.log("") // blank line to separate rounds
     } 
 }
-
-// function that capitalizes the first letter of computer input for print statement
