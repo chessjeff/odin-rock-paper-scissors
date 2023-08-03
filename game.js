@@ -79,9 +79,9 @@ function game() {
         console.log(roundResult);
         
         // check result to update score counter
-        if (roundResult.includes("w", 4)) {
+        if (roundResult.includes("You win")) {
             playerTally++;
-        } else if (roundResult.includes("l", 4)) {
+        } else if (roundResult.includes("You lose")) {
             computerTally++;
         } else {
             drawCounter++;
