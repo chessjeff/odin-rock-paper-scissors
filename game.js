@@ -18,7 +18,7 @@ function getComputerChoice(max=3) {
 }
 
 // plays a round of rock paper scissors and returns game result
-function playRound(playerSelection, computerSelection) { // manually insert playerSelection, call computerSelection()
+function playRound(playerSelection, computerSelection) {
     let result;
     let lowerPlayerSelection = playerSelection.toLowerCase()
     
@@ -26,8 +26,8 @@ function playRound(playerSelection, computerSelection) { // manually insert play
     // rock > scissors 
     // paper > rock
     // scissors > paper
-    // if user input wins: "congrats, you win"
-    // if computer wins: "i win"
+    // if user input wins: "You win! ..."
+    // if computer wins: "You lose! ..."
     switch(lowerPlayerSelection) {
         case "rock":
             if(computerSelection === "paper") {
@@ -61,16 +61,8 @@ function playRound(playerSelection, computerSelection) { // manually insert play
     return result;
 }
 
-//const playerSelection = "paper";
-//const computerSelection = getComputerChoice();
-
-//console.log(playRound(playerSelection, computerSelection))
-
+// play rock paper scissors 5 times, print playRound() result and score
 function game() {
-// run the game 5 times
-// prompt player for input for each round
-// keep a tally of wins and losses
-// return overall winner after 5 rounds
 
     let playerTally = 0;
     let computerTally = 0;
@@ -80,22 +72,26 @@ function game() {
     // run game 5 times while keeping score
     for (let i = 0; i < 5; i++) {
         // get input and computer's choice
-        let playerSelection = prompt("Enter rock, paper, or scissors", "")
-        let roundChoice = getComputerChoice()
+        let playerSelection = prompt("Enter rock, paper, or scissors", "");
+        let roundChoice = getComputerChoice();
         // run game and print result
-        let roundResult = playRound(playerSelection, roundChoice)
+        let roundResult = playRound(playerSelection, roundChoice);
         console.log(roundResult);
         
         // check result to update score counter
-        if (roundResult.includes("You win")) {
+        if (roundResult.includes("w", 4)) {
             playerTally++;
-        } else if (roundResult.includes("You lose")) {
+        } else if (roundResult.includes("l", 4)) {
             computerTally++;
         } else {
             drawCounter++;
         }
-        console.log(`The score is ${playerTally} - ${computerTally} - ${drawCounter}`)
+        console.log(`The score is ${playerTally} - ${computerTally} - ${drawCounter}`);
         
-        console.log("") // blank line to separate rounds
-    } 
+        console.log(""); // blank line to separate rounds
+    }
 }
+
+// tiebreaker() would be cool
+// game() calls tiebreaker() if playerTally == computerTally at the end of the loop
+// or playRound() again and then assign a different string 
