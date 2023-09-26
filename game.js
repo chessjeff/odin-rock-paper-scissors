@@ -18,17 +18,11 @@ function getComputerChoice(max=3) {
 }
 
 // plays a round of rock paper scissors and returns game result
-function playRound(playerSelection, computerSelection) {
+function playRound(playerSelection) {
     let result;
-    let lowerPlayerSelection = playerSelection.toLowerCase()
+    let computerSelection = getComputerChoice();
     
-    // compare user input to random: 
-    // rock > scissors 
-    // paper > rock
-    // scissors > paper
-    // if user input wins: "You win! ..."
-    // if computer wins: "You lose! ..."
-    switch(lowerPlayerSelection) {
+    switch(playerSelection) {
         case "rock":
             if(computerSelection === "paper") {
                 result = `You lose! ${computerSelection} beats Rock!`
@@ -58,40 +52,34 @@ function playRound(playerSelection, computerSelection) {
             break;
     }
 
-    return result;
+    console.log(result);
+    printGameResult(result);
+
 }
 
-// play rock paper scissors 5 times, print playRound() result and score
-function game() {
+function printGameResult(playRoundResult) {
+    const container = document.querySelector('#container')
+    const content = document.createElement('div');
+    content.classList.add('content');
+    content.textContent = playRoundResult;
+    container.appendChild(content);
+} 
 
-    let playerTally = 0;
-    let computerTally = 0;
-    let drawCounter = 0;
+const buttons = document.querySelectorAll('button');
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        playRound(button.id); //this is where a function call is made
+        // calls playRound()
+    });
+});
 
-    // one instance of rock paper scissors
-    // run game 5 times while keeping score
-    for (let i = 0; i < 5; i++) {
-        // get input and computer's choice
-        let playerSelection = prompt("Enter rock, paper, or scissors", "");
-        let roundChoice = getComputerChoice();
-        // run game and print result
-        let roundResult = playRound(playerSelection, roundChoice);
-        console.log(roundResult);
-        
-        // check result to update score counter
-        if (roundResult.includes("You win")) {
-            playerTally++;
-        } else if (roundResult.includes("You lose")) {
-            computerTally++;
-        } else {
-            drawCounter++;
-        }
-        console.log(`The score is ${playerTally} - ${computerTally} - ${drawCounter}`);
-        
-        console.log(""); // blank line to separate rounds
-    }
-}
 
-// tiebreaker() would be cool
-// game() calls tiebreaker() if playerTally == computerTally at the end of the loop
-// or playRound() again and then assign a different string 
+//playRound needs to take just one parameter (the button press)
+//playRound calls getComputerChoice
+//playRound compares these two and returns result
+
+//printGameResult() takes playRound Return 
+//creates a div for the result of the game
+
+//printScore() tracks how many result divs there are
+//deduce winner info and print score
