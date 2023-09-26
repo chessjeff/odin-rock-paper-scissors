@@ -1,3 +1,13 @@
+const buttons = document.querySelectorAll('button');
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        playRound(button.id);
+    });
+});
+
+let playerScore = 0;
+let computerScore = 0;
+
 // assign random number (1 - 3) to "rock" "paper" "scissors"
 function getComputerChoice(max=3) { 
     const randInt = Math.floor(Math.random() * max + 1);
@@ -25,8 +35,10 @@ function playRound(playerSelection) {
     switch(playerSelection) {
         case "rock":
             if(computerSelection === "paper") {
+                computerScore++;
                 result = `You lose! ${computerSelection} beats Rock!`
             } else if (computerSelection === "scissors") {
+                playerScore++;
                 result = `You win!! Rock beats ${computerSelection}`
             } else {
                 result = "It's a draw!"
@@ -34,8 +46,10 @@ function playRound(playerSelection) {
             break;
         case "paper":
             if(computerSelection === "scissors") {
+                computerScore++;
                 result = `You lose! ${computerSelection} beats Paper!`
             } else if (computerSelection === "rock") {
+                playerScore++;
                 result = `You win!! Paper beats ${computerSelection}!`
             } else {
                 result = "It's a draw!"
@@ -43,8 +57,10 @@ function playRound(playerSelection) {
             break;
         case "scissors":
             if(computerSelection === "rock") {
+                computerScore++
                 result = `You lose! ${computerSelection} beats Scissors!`
             } else if (computerSelection === "paper") {
+                playerScore++;
                 result = `You win!! Scissors beats ${computerSelection}!`
             } else {
                 result = "It's a draw!"
@@ -52,26 +68,25 @@ function playRound(playerSelection) {
             break;
     }
 
-    console.log(result);
     printGameResult(result);
-
+    printScore(playerScore, computerScore);
 }
 
 function printGameResult(playRoundResult) {
-    const container = document.querySelector('#container')
+    const resultList = document.querySelector('#result');
     const content = document.createElement('div');
-    content.classList.add('content');
     content.textContent = playRoundResult;
-    container.appendChild(content);
+    resultList.appendChild(content);
 } 
 
-const buttons = document.querySelectorAll('button');
-buttons.forEach((button) => {
-    button.addEventListener('click', () => {
-        playRound(button.id); //this is where a function call is made
-        // calls playRound()
-    });
-});
+function printScore(player, computer) {
+    const scoreContainer = document.querySelector('#scoreContainer');
+    const score = document.createElement('div');
+    score.textContent = `Human ${player} Computer ${computer}`;
+    scoreContainer.appendChild(score);
+}
+
+
 
 
 //playRound needs to take just one parameter (the button press)
@@ -81,5 +96,6 @@ buttons.forEach((button) => {
 //printGameResult() takes playRound Return 
 //creates a div for the result of the game
 
-//printScore() tracks how many result divs there are
-//deduce winner info and print score
+//printScore() counts divs in container
+//
+//
