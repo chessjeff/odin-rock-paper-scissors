@@ -51,7 +51,6 @@ function playGame(playerSelection) {
     checkGameOver();
 };
     
-
 function playRound(playerSelection) {
     let result;
     let computerSelection = getComputerChoice();
@@ -104,7 +103,6 @@ function printScore(player, computer) {
     scoreContainer.appendChild(score);
 }
 
-
 function gameReset() {
     playerScore = 0;
     computerScore = 0;
@@ -116,7 +114,6 @@ function gameReset() {
 
     toggleButton();
 }
-
 
 function checkGameOver() {
     if (playerScore === 5) {

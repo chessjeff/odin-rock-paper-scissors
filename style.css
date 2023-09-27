@@ -1,0 +1,30 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(130, 239, 130);
+}
+
+div {
+    padding-bottom: 12px;
+}
+
+.resultText {
+    font-size: 24px;
+}
+
+.scoreText {
+    font-size: 18px;
+}
+
+.selections {
+    padding: 0px 22px;
+    display: flex;
+    justify-content:space-between;
+}
+
+button {
+    border-radius: 8px;
+    padding: 12px;
+}
