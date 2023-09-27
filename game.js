@@ -1,7 +1,7 @@
 const buttons = document.querySelectorAll('button');
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
-        playRound(button.id);
+        playGame(button.id);
     });
 });
 
@@ -13,6 +13,17 @@ const score = document.createElement('div');
 
 const resultList = document.querySelector('#result');
 const content = document.createElement('div');
+
+const gameEnd = document.querySelector('#gameOverText')
+const endText = document.createElement('div');
+
+const reset = document.querySelector('#reset');
+const resetButton = document.createElement('button');
+resetButton.textContent = 'Reset';
+
+const rockBtn = document.querySelector('#rock');
+const paperBtn = document.querySelector('#paper');
+const scissorsBtn = document.querySelector('#scissors');
 
 // assign random number (1 - 3) to "rock" "paper" "scissors"
 function getComputerChoice(max=3) { 
@@ -33,14 +44,18 @@ function getComputerChoice(max=3) {
     return computerChoice;
 }
 
-// plays a round of rock paper scissors and returns game result
+function playGame(playerSelection) {
+    const result = playRound(playerSelection);
+    printGameResult(result);
+    printScore(playerScore, computerScore);
+    checkGameOver();
+};
+    
+
 function playRound(playerSelection) {
     let result;
     let computerSelection = getComputerChoice();
     
-    //resultList.removeChild(content);
-    //scoreContainer.removeChild(score);
-
     switch(playerSelection) {
         case "rock":
             if(computerSelection === "paper") {
@@ -76,9 +91,7 @@ function playRound(playerSelection) {
             }
             break;
     }
-
-    printGameResult(result);
-    printScore(playerScore, computerScore);
+    return result;
 }
 
 function printGameResult(playRoundResult) {
@@ -92,3 +105,47 @@ function printScore(player, computer) {
 }
 
 
+function gameReset() {
+    playerScore = 0;
+    computerScore = 0;
+
+    scoreContainer.removeChild(score);
+    resultList.removeChild(content);
+    reset.removeChild(resetButton);
+    gameEnd.removeChild(endText);
+
+    toggleButton();
+}
+
+
+function checkGameOver() {
+    if (playerScore === 5) {
+        endText.textContent = 'The game is over, you won!'
+        gameEnd.appendChild(endText);
+        reset.appendChild(resetButton);
+        resetButton.addEventListener('click', () => {
+            gameReset();
+        });
+        toggleButton();
+    } else if (computerScore === 5) {
+        endText.textContent = 'The game is over, you lost.'
+        gameEnd.appendChild(endText);
+        reset.appendChild(resetButton);
+        resetButton.addEventListener('click', () => {
+            gameReset();
+        });
+        toggleButton();
+    } 
+}
+
+function toggleButton() {
+    if (playerScore === 5 || computerScore === 5) {
+        rockBtn.setAttribute('disabled', 'disabled');
+        paperBtn.setAttribute('disabled', 'disabled');
+        scissorsBtn.setAttribute('disabled', 'disabled');
+    } else {
+        rockBtn.removeAttribute('disabled');
+        paperBtn.removeAttribute('disabled');
+        scissorsBtn.removeAttribute('disabled');
+    }
+};
